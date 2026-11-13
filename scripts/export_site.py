@@ -98,9 +98,10 @@ def main():
             if len(versions) != 1:
                 raise ValueError('Expected one current download for ' + stem)
             shutil.copy2(versions[0], download_dir / (stem + '.pdf'))
-        # Preserve prior versioned PDF URLs already shared with visitors.
+        # Preserve prior versioned portfolio PDF URLs already shared with visitors.
+        # Older CV versions are not kept: they included referees' contact details.
         previous_downloads = ROOT / 'docs/wp-content/uploads/ahmed-portfolio'
-        for previous in previous_downloads.glob('Ahmed-Marzouk-*.pdf'):
+        for previous in previous_downloads.glob('Ahmed-Marzouk-Portfolio-*.pdf'):
             destination = download_dir / previous.name
             if not destination.exists():
                 shutil.copy2(previous, destination)
