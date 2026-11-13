@@ -202,3 +202,6 @@ body.home .hero .home-hero-photo {display:none}
 .environment-collage{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;align-items:start}
 @media(max-width:1000px){.collection-cycle{grid-template-columns:repeat(2,minmax(0,1fr))}.student-collage{columns:2}.collection-intro{gap:30px}.environment-collage{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:680px){.collection-intro{grid-template-columns:minmax(0,1fr);gap:8px;padding:24px 0}.collection-intro h2{font-size:30px}.collection-intro>p{font-size:16px}.collection-cycle{gap:24px 20px}.collection-cycle h3{font-size:18px}.collection-cycle p{font-size:14px}.student-collage{columns:1}.collection-work{margin-top:50px}.environment-collage{grid-template-columns:minmax(0,1fr)}.collection-environment{margin:50px 0}}
+
+/* Preserve the approved 4 x 6 portrait framing. */
+.about-grid .portrait{aspect-ratio:2/3}

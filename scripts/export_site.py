@@ -10,7 +10,7 @@ import posixpath
 import re
 import shutil
 import tempfile
-from urllib.parse import quote, unquote, urlsplit
+from urllib.parse import quote, unquote, urlsplit, urljoin
 from urllib.request import urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -20,8 +20,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source', default='http://ahmed-portfolio.local')
     parser.add_argument('--wordpress-root', default='/Users/amarzouk/Local Sites/ahmed-portfolio/app/public')
+    parser.add_argument('--public-url', default='https://amarzoukportfolio.github.io')
     args = parser.parse_args()
     source = args.source.rstrip('/')
+    public = args.public_url.rstrip('/')
     assets = set()
     def get(path):
         with urlopen(source + path, timeout=60) as response:
@@ -61,7 +63,13 @@ def main():
             output = path.lstrip('/') + 'index.html'
             dest = stage / output
             dest.parent.mkdir(parents=True, exist_ok=True)
-            dest.write_text(transform(get(path).decode(), output))
+            markup = transform(get(path).decode(), output)
+            # Link previews and canonical addresses require absolute public URLs.
+            page_url = public + path
+            markup = re.sub(r'(<meta\b[^>]*property="og:url"[^>]*content=")[^"]*(")', lambda m: m[1] + html.escape(page_url, quote=True) + m[2], markup)
+            markup = re.sub(r'(<meta\b[^>]*property="og:image"[^>]*content=")([^"]*)(")', lambda m: m[1] + html.escape(urljoin(page_url, html.unescape(m[2])), quote=True) + m[3], markup)
+            markup = markup.replace('</head>', '<link rel="canonical" href="' + html.escape(page_url, quote=True) + '"></head>')
+            dest.write_text(markup)
         copied = set()
         while assets - copied:
             batch = assets - copied
@@ -83,6 +91,19 @@ def main():
                                 assets.add(posixpath.normpath(posixpath.join(posixpath.dirname(asset), value)))
                     dest.write_text(transform(text, asset.lstrip('/')))
                 copied.add(asset)
+        # Keep stable download addresses in addition to cache-busting filenames.
+        download_dir = stage / 'wp-content/uploads/ahmed-portfolio'
+        for stem in ['Ahmed-Marzouk-CV', 'Ahmed-Marzouk-Portfolio']:
+            versions = list(download_dir.glob(stem + '-*.pdf'))
+            if len(versions) != 1:
+                raise ValueError('Expected one current download for ' + stem)
+            shutil.copy2(versions[0], download_dir / (stem + '.pdf'))
+        # Preserve prior versioned PDF URLs already shared with visitors.
+        previous_downloads = ROOT / 'docs/wp-content/uploads/ahmed-portfolio'
+        for previous in previous_downloads.glob('Ahmed-Marzouk-*.pdf'):
+            destination = download_dir / previous.name
+            if not destination.exists():
+                shutil.copy2(previous, destination)
         (stage / '.nojekyll').touch()
         # Preserve the old student project URL as a static redirect.
         old = stage / 'student-projects/raspberry-pi-ai-robot/index.html'
