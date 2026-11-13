@@ -66,32 +66,6 @@ body{font-family:Jost,Futura,'Century Gothic','Avenir Next',Avenir,Arial,sans-se
 /* WordPress additions, preserving the approved portfolio composition. */
 body.admin-bar .skip:focus{top:44px}.am-extra-content{max-width:1200px;margin:32px auto;padding:0 22px}.wp-block-image img{max-width:100%;height:auto}.wp-block-video video{max-width:100%}.am-note{color:var(--muted)}
 
-/* BEGIN reversible home background trial — 2026-11-10 */
-body.home .hero {
-  display:block;
-  min-height:clamp(570px,47.66vw,866px);
-  background:#1e1e1c url("images/home-projects-background.png") center center / cover no-repeat;
-}
-body.home .hero .hero-inner {
-  width:51%; min-height:inherit;
-  padding:65px clamp(30px,5vw,90px) 55px;
-}
-body.home .hero .home-hero-photo {display:none}
-@media(max-width:680px) {
-  body.home .hero {
-    min-height:740px;
-    background-position:right bottom;
-    background-size:auto 390px;
-  }
-  body.home .hero .hero-inner {
-    width:100%; min-height:350px;
-    padding:34px 23px 28px;
-    justify-content:flex-start;
-    background:linear-gradient(#1e1e1c 85%,transparent);
-  }
-}
-/* END reversible home background trial */
-
 /* Align index card headings while preserving document image proportions. */
 @media(min-width:681px){
   .index-grid .project-card .document-photo{
