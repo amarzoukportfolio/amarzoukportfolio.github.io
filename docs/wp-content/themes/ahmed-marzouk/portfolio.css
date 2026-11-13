@@ -205,3 +205,12 @@ body.home .hero .home-hero-photo {display:none}
 
 /* Preserve the approved 4 x 6 portrait framing. */
 .about-grid .portrait{aspect-ratio:2/3}
+
+/* Memorial process recovery: show complete design studies and workshop footage. */
+.memorial-case-study .process-stage:has(.stage-media-gallery),
+.memorial-case-study .process-stage:has(.project-video){display:block}
+.memorial-case-study .process-stage:has(.stage-media-gallery) .stage-copy,
+.memorial-case-study .process-stage:has(.project-video) .stage-copy{max-width:850px;margin-bottom:28px}
+.memorial-case-study .cycle-group .actual-photo{aspect-ratio:auto;max-height:none;background:transparent}
+.memorial-case-study .cycle-group .actual-photo img{height:auto;max-height:none;object-fit:contain}
+.memorial-case-study .project-video{display:block;width:100%;max-width:1000px;height:auto;margin:0 auto;background:#171715}
