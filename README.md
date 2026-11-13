@@ -2,12 +2,15 @@
 
 GitHub Pages export of the current local WordPress portfolio. The website is in `docs/`. WordPress remains the editing source.
 
-## First publication using GitHub Desktop
+Website: https://amarzoukportfolio.github.io/
 
-1. Choose **File → Add Local Repository** and select this folder.
-2. Choose **Publish repository**, name it `portfolio`, and turn off **Keep this code private** for free GitHub Pages hosting.
-3. On the repository’s GitHub page, open **Settings → Pages**. Choose **Deploy from a branch**, branch **main**, folder **/docs**, then **Save**.
-4. GitHub displays the live website URL after the deployment finishes.
+Repository: https://github.com/amarzoukportfolio/amarzoukportfolio.github.io
+
+## GitHub Pages configuration
+
+The public repository belongs to the `amarzoukportfolio` organization. Pages publishes from branch **main**, folder **/docs**, with HTTPS enabled. Keep the repository name `amarzoukportfolio.github.io` to retain the website address.
+
+In GitHub Desktop, choose **File → Add Local Repository** and select this folder if it is not already listed. The local repository’s origin points to the organization repository above.
 
 ## Update the website
 
